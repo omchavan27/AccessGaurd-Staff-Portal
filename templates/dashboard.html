@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h3 class="heading">Employees Inventory</h3>
+  <a href="{{ url_for('export_staff') }}" class="btn btn-outline-light btn-sm btn-secondary">
+    Export to CSV
+  </a>
+</div>
+
+{% if current_user.role == 'admin' %}
+<div class="card p-3 mb-4 ">
+  <form method="POST" action="{{ url_for('add_employee') }}" class="row g-2 ">
+    <input name="full_name" class="form-control col me-1" placeholder="Employee Name" required>
+    <input name="department" class="form-control col me-1" placeholder="Department">
+    <input name="position" class="form-control col me-1" placeholder="Position">
+    <input name="email" class="form-control col me-1" placeholder="Email">
+    <button class="btn btn-green col ">Add New Employee</button>
+  </form>
+</div>
+{% endif %}
+
+<div class="card p-3">
+  <div class="table-responsive">
+    <table class="table table-dark table-hover align-middle adding-employee">
+      <thead>
+        <tr>
+          <th>Employee Name</th>
+          <th>Department</th>
+          <th>Position</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for e in employees %}
+        <tr>
+          <td>{{ e.full_name }}</td>
+          <td>{{ e.department }}</td>
+          <td>{{ e.position }}</td>
+          <td>{{ e.email }}</td>
+          <td><a href="{{url_for('delete_employee',emp_id=e.id)}}"onclick="return confirm('Are you sure ?')"class="btn-delete">Delete</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}
