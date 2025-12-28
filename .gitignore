@@ -1,0 +1,8 @@
+#Virtual Envioornment
+env
+#Database(Instance Folder)
+instance/
+*.db
+#Python Cache
+__pycache__/
+*.pyc
